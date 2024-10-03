@@ -241,7 +241,7 @@ export default function Home() {
             {currentQuestion === 6 && (
               <div>
                 <p className="text-3xl tracking-tight font-semibold text-red-500">
-                  Are you sure you don't want to reconsider?
+                  Are you sure you don&#39;t want to reconsider?
                 </p>
                 <Button type="button" className="mt-4 bg-blue-500 text-white p-2 mr-2" onClick={handleSubmit}>
                   Yes
