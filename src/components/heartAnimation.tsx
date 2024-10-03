@@ -1,6 +1,4 @@
-// FlyingHearts.tsx
 import React, { useEffect } from "react";
-import Heart from "./hearts";
 
 const FlyingHearts: React.FC = () => {
     const createHeart = () => {
