@@ -186,7 +186,7 @@ export default function Home() {
                   </div>
                   <div className="relative">
                     <Image
-                      src="/WhenharryMetSally.jpg"
+                      src="/WhenHarryMetSally.jpg"
                       alt="Movie Option 2"
                       width={150}
                       height={150}
