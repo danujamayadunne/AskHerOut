@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ask Her Out – a sweet interactive invite
 
-## Getting Started
+An elegant, playful single-page Next.js experience to invite someone special on a date. It walks them through a few romantic prompts (date, dinner, movie), shows floating hearts, and can optionally save their answers to a Google Form.
 
-First, run the development server:
+## Features
+- Floating heart animation and soft glassmorphism card layout.
+- Step-by-step flow with calendar, food, and movie picks.
+- Positive and “maybe not now” paths, with a gentle final screen.
+- Optional Google Form submission (uses hidden form POST with `entry.12213123` or any field you set).
 
+## Tech
+- Next.js 14 (App Router)
+- React 18
+- Tailwind CSS + shadcn/ui button + react-day-picker calendar
+
+## Quick start
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables (Google Form)
+Add a `.env.local` in the project root if you want to capture answers in Google Forms:
+```
+NEXT_PUBLIC_GOOGLE_FORM_ACTION="https://docs.google.com/forms/d/e/.../formResponse"
+NEXT_PUBLIC_GOOGLE_FORM_ENTRY_FIELD="entry.12213123"
+```
+- `NEXT_PUBLIC_GOOGLE_FORM_ACTION`: the form “action” URL (open your live form, View Source, search for `form action=`).
+- `NEXT_PUBLIC_GOOGLE_FORM_ENTRY_FIELD`: the field name to post to (in source, each input has a name like `entry.12213123`). The app sends a single summary string to this field.
+- Deployment note: `NEXT_PUBLIC_` vars must be set in your hosting environment (Vercel dashboard → Project Settings → Environment Variables).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If these vars are empty, the app still works; it just won’t POST to Google Forms.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Customizing the invite
+- Update copy, options, and images in `src/app/page.tsx`.
+- Replace or add images under `public/` and point to them in the food/movie option arrays.
+- Adjust theme colors or background in `src/app/globals.css`.
+- Edit site metadata in `src/app/layout.tsx`.
 
-## Learn More
+## Build & production
+```bash
+npm run build
+npm run start   # serves the built app
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
+- Vercel: push to a Git repo and import; set env vars if using Google Forms.
+- Any Node host: build, then run `npm start` on the server; serve on port 3000 (or set `PORT`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## How the Google Form submission works
+- On final submit, the app assembles a single summary string of the answers.
+- It posts a `FormData` payload with that summary to your form action using `fetch` + `mode: "no-cors"`.
+- To map multiple fields instead of one summary, add more `payload.append("entry.xxxxxx", value)` lines in `sendToGoogleForm` in `src/app/page.tsx`.

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
 }
 
 @layer utilities {
@@ -79,20 +79,22 @@ body {
   }
 }
 
-/* styles.css */
+/* soft romantic backdrop + breathing room */
 body {
   margin: 0;
-  overflow: hidden;
-  /* Prevents scrollbars from appearing */
-  background-color: #fff;
-  /* Change as desired */
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, #ffe4e6 0, #fff7fb 25%, transparent 45%),
+    radial-gradient(circle at 80% 0%, #ffe4e6 0, #fff7fb 25%, transparent 40%),
+    #fffdfd;
+  color: #0f172a;
 }
 
 .heart {
   position: absolute;
   width: 20px;
   height: 20px;
-  background-color: red;
+  background-color: #fb7185;
   transform: rotate(45deg);
   animation: fly 5s linear forwards;
 }
@@ -104,7 +106,7 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: red;
+  background-color: #fb7185;
 }
 
 .heart::before {
@@ -121,5 +123,59 @@ body {
   to {
     transform: translateY(-100vh) translateX(100vw);
     opacity: 0;
+  }
+}
+
+/* floating petals */
+.petal {
+  position: absolute;
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  opacity: 0.9;
+  filter: drop-shadow(0 6px 10px rgba(251, 113, 133, 0.25));
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0.95);
+    opacity: 0.9;
+  }
+  60% {
+    transform: translateY(-50vh) translateX(-12vw) rotate(45deg) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-105vh) translateX(16vw) rotate(90deg) scale(1.05);
+    opacity: 0;
+  }
+}
+
+/* gentle entrance animation for cards */
+.fade-card {
+  animation: fadeUp 0.6s ease both;
+}
+
+.fade-item {
+  animation: fadeIn 0.8s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
